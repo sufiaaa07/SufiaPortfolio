@@ -101,7 +101,7 @@ async function start(){
   // plastic clip + metal ring through the slot
   const clip = new THREE.Group();
   const clipBody = new THREE.Mesh(
-    new THREE.BoxGeometry(30, 15, 7, 1, 1, 1),
+    new THREE.BoxGeometry(40, 16, 8, 1, 1, 1),
     new THREE.MeshPhysicalMaterial({ color: OLIVE_D, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.15 })
   );
   clipBody.position.y = 19;
@@ -204,14 +204,14 @@ async function start(){
     const clipTop = new THREE.Vector3(0, 26, 0); clip.localToWorld(clipTop);
     up.set(0, 1, 0).applyQuaternion(card.getWorldQuaternion(q)).normalize();
     const ax = s.left + s.W / 2;
-    const spread = s.pinned ? 0 : 58 * Math.max(k, 0.7);
+    const spread = s.pinned ? 0 : 34 * Math.max(k, 0.7);
     const topY = s.pinned ? s.top + s.AY : s.top + s.AY - 320;
     const bow = Math.max(-46, Math.min(46, -s.omega * 26));
-    const ribbonW = 19 * Math.max(k, 0.72);
+    const ribbonW = 30 * Math.max(k, 0.72);
     for (let i = 0; i < 2; i++){
       const side = i ? 1 : -1;
       const p0 = W(ax + side * spread, topY, side * 14);
-      const p3 = clipTop.clone().add(new THREE.Vector3(side * 5 * k, 0, side * 2));
+      const p3 = clipTop.clone().add(new THREE.Vector3(side * 9 * k, 0, side * 2));
       const len = p0.distanceTo(p3);
       const p1 = p0.clone().add(new THREE.Vector3(bow * 0.4, -len * 0.35, side * 10));
       const p2 = p3.clone().add(up.clone().multiplyScalar(len * 0.32)).add(new THREE.Vector3(bow + side * 10, 0, side * 6));

@@ -758,9 +758,9 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   .hero-h1 { font-size: clamp(64px, min(11vw, 17vh), 148px); }
   .hero .hero-desc { max-width: none; }
   /* paragraph block never wider than the italic subheading line */
-  .hero-row > div:first-child { max-width: calc(clamp(22px, min(3.4vw, 5.6vh), 46px) * 11.6); }
-  /* subheading breaks onto two lines so the ID card gets room on the right */
-  .hero-h1-sub { max-width: 11.2em; }
+  .hero-row > div:first-child { max-width: min(560px, 42vw); }
+  /* subheading stays on one line; sized so it leaves room for the ID card on the right */
+  .hero-h1-sub { white-space: nowrap; width: max-content; font-size: clamp(22px, min(2.5vw, 4.2vh), 40px) !important; }
 }
 /* About Me scrapbook layout */
 @media(max-width:1024px){
@@ -1023,8 +1023,8 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   .hero-info { display:none; }
 }
 @media(max-width:768px){
-  .lanyard { right: 20px; --k: .6; }
-  .hero { padding-top: 305px; }
+  .lanyard { right: 20px; --k: .7; }
+  .hero { padding-top: 345px; }
   .hero-h1-sub { min-height: 2em; } /* typed word never changes the line count */
   .idc-hint { font-size:8px; left:auto; right:0; transform:none; }
 }
@@ -2016,8 +2016,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       for (const b of rg.getClientRects()) r = Math.max(r, b.right);
     });
     // the subheading's last word is typed in and out, so reserve its whole box
+    // measured with the longest word typed out, plus the cursor
     const sub = hero.querySelector('.hero-h1-sub');
-    if (sub) r = Math.max(r, sub.getBoundingClientRect().right);
+    if (sub){
+      const cs = getComputedStyle(sub), m = document.createElement('canvas').getContext('2d');
+      m.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const longest = m.measureText('I turn ideas into products people can experience.').width + 8;
+      r = Math.max(r, sub.getBoundingClientRect().left + longest);
+    }
     return r;
   }
 
@@ -2026,20 +2032,20 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
     wrap.classList.remove('pinned');
     let pinned = false, left = null;
     if (mobile){
-      k = 0.6; L = 72; AY = -40;
+      k = 0.7; L = 72; AY = -40;
     } else {
       const hdr = document.querySelector('header');
       const nav = document.querySelector('.hd-links');
       const navL = nav ? nav.getBoundingClientRect().left - 22 : innerWidth;
       const zoneL = textRight() + 48;
       const zoneR = innerWidth - 48;
-      k = Math.max(0.62, Math.min(1.05, innerHeight / 900, innerWidth / 1300));
+      k = Math.max(0.62, Math.min(1.35, innerHeight / 700, innerWidth / 1050));
       L = Math.max(130, Math.min(280, innerHeight * 0.29));
       AY = -40;
       // 1) hang from the top of the page, left of the nav links, clear of the text
       let found = false;
       for (let kk = k; kk >= 0.62; kk -= 0.04){
-        const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, navL);
+        const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, navL - 40 * kk); // keep the right-hand strap clear of the nav
         if (hi >= lo){ k = kk; left = lo + (hi - lo) * 0.85 - w / 2; found = true; break; }
       }
       // 2) not enough room left of the nav: pin it just under the header instead
@@ -2069,7 +2075,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
     pin.style.left = W / 2 + 'px';
     pin.style.top = AY + 'px';
     hint.style.top = (AY + L + clipH + cardH + (mobile ? 16 : 26)) + 'px';
-    const sw = 22 * Math.max(k, .72);
+    const sw = 32 * Math.max(k, .72);
     paths[0].setAttribute('stroke-width', sw);
     paths[1].setAttribute('stroke-width', sw - 3);
     paths[2].setAttribute('stroke-width', sw - 5);
