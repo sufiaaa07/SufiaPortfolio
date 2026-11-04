@@ -387,21 +387,15 @@ async function start(){
   }
 
   function auraTexture(){
+    // one soft olive glow
     const c = document.createElement('canvas'); c.width = c.height = 256;
     const x = c.getContext('2d');
-    x.filter = 'blur(26px)';
-    const g = x.createConicGradient ? x.createConicGradient(0, 128, 128) : null;
-    if (g){
-      ['#E88CAA', '#FAE8B0', '#B8CCE4', '#c9b6e4', '#9fb46e', '#E88CAA'].forEach((col, i, a) => g.addColorStop(i / (a.length - 1), col));
-      x.fillStyle = g;
-    } else x.fillStyle = '#E88CAA';
-    x.beginPath(); x.ellipse(128, 128, 80, 80, 0, 0, Math.PI * 2); x.fill();
-    // soften the centre so the glow sits around the card
-    x.filter = 'none';
-    const mask = x.createRadialGradient(128, 128, 20, 128, 128, 128);
-    mask.addColorStop(0, 'rgba(0,0,0,1)'); mask.addColorStop(0.75, 'rgba(0,0,0,.6)'); mask.addColorStop(1, 'rgba(0,0,0,0)');
-    x.globalCompositeOperation = 'destination-in'; x.fillStyle = mask; x.fillRect(0, 0, 256, 256);
-    const t = makeTex(c);
-    return t;
+    const g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+    g.addColorStop(0, 'rgba(122,140,82,.55)');
+    g.addColorStop(0.45, 'rgba(122,140,82,.28)');
+    g.addColorStop(1, 'rgba(122,140,82,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+    return makeTex(c);
   }
+
 }

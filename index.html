@@ -874,7 +874,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   content:'';
   position:absolute; inset:0;
   border-radius:45%;
-  background:conic-gradient(from 0deg,#E88CAA,#FAE8B0,#B8CCE4,#c9b6e4,#9fb46e,#E88CAA);
+  background:radial-gradient(closest-side,rgba(122,140,82,.55),rgba(122,140,82,.25) 50%,transparent);
   filter:blur(34px);
   animation:idcAura 9s linear infinite;
 }
@@ -1024,7 +1024,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 }
 @media(max-width:768px){
   .lanyard { right: 20px; --k: .6; }
-  .hero { padding-top: 290px; }
+  .hero { padding-top: 305px; }
   .hero-h1-sub { min-height: 2em; } /* typed word never changes the line count */
   .idc-hint { font-size:8px; left:auto; right:0; transform:none; }
 }
@@ -1918,30 +1918,9 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const c1=document.getElementById('c1'),c2=document.getElementById('c2');
 let mx=0,my=0,rx=0,ry=0;
-const sparkleColors=['#E88CAA','#7A8C52','#FAE8B0','#B8CCE4','#F0EAD6','#d4a0b8'];
-let lastSparkleTime=0;
-function spawnSparkle(x,y){
-  const s=document.createElement('span');
-  const size=Math.random()*6+4;
-  const angle=Math.random()*360;
-  const dist=Math.random()*18+8;
-  const color=sparkleColors[Math.floor(Math.random()*sparkleColors.length)];
-  const shape=Math.random()>.5?'✦':'✶';
-  s.textContent=shape;
-  s.style.cssText='position:fixed;pointer-events:none;z-index:9997;font-size:'+size+'px;color:'+color+';left:'+x+'px;top:'+y+'px;transform:translate(-50%,-50%);opacity:1;transition:transform .5s ease-out,opacity .5s ease-out;will-change:transform,opacity;';
-  document.body.appendChild(s);
-  requestAnimationFrame(()=>{
-    const rad=angle*Math.PI/180;
-    s.style.transform='translate(calc(-50% + '+(Math.cos(rad)*dist)+'px),calc(-50% + '+(Math.sin(rad)*dist)+'px)) scale(0)';
-    s.style.opacity='0';
-  });
-  setTimeout(()=>s.remove(),520);
-}
 document.addEventListener('mousemove',e=>{
   mx=e.clientX;my=e.clientY;
   c1.style.left=mx+'px';c1.style.top=my+'px';
-  const now=Date.now();
-  if(now-lastSparkleTime>40){lastSparkleTime=now;spawnSparkle(mx,my);}
 });
 (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;c2.style.left=rx+'px';c2.style.top=ry+'px';requestAnimationFrame(loop);})();
 
@@ -2047,7 +2026,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
     wrap.classList.remove('pinned');
     let pinned = false, left = null;
     if (mobile){
-      k = 0.6; L = 56; AY = -40;
+      k = 0.6; L = 72; AY = -40;
     } else {
       const hdr = document.querySelector('header');
       const nav = document.querySelector('.hd-links');
@@ -2055,13 +2034,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       const zoneL = textRight() + 48;
       const zoneR = innerWidth - 48;
       k = Math.max(0.62, Math.min(1.05, innerHeight / 900, innerWidth / 1300));
-      L = Math.max(90, Math.min(220, innerHeight * 0.22));
+      L = Math.max(130, Math.min(280, innerHeight * 0.29));
       AY = -40;
       // 1) hang from the top of the page, left of the nav links, clear of the text
       let found = false;
       for (let kk = k; kk >= 0.62; kk -= 0.04){
         const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, navL);
-        if (hi >= lo){ k = kk; left = (lo + hi) / 2 - w / 2; found = true; break; }
+        if (hi >= lo){ k = kk; left = lo + (hi - lo) * 0.85 - w / 2; found = true; break; }
       }
       // 2) not enough room left of the nav: pin it just under the header instead
       if (!found){
