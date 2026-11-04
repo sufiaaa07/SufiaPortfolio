@@ -768,6 +768,200 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   .ab-side { flex-direction:column !important; align-items:center !important; }
   .ab-side > div { max-width:100%; }
 }
+/* ── HERO ID CARD (lanyard) ── */
+.lanyard {
+  --k: 1;
+  position: absolute;
+  top: 0;
+  right: 27%;
+  width: calc(236px * var(--k));
+  height: 0;
+  z-index: 5;
+  font-size: calc(16px * var(--k));
+}
+.lanyard-strap {
+  position: absolute;
+  left: 0; top: 0;
+  width: 1px; height: 1px;
+  overflow: visible;
+  pointer-events: none;
+}
+.lanyard-strap .strap-edge { fill:none; stroke:#5d6b3c; stroke-linecap:butt; }
+.lanyard-strap .strap-body { fill:none; stroke:var(--f1); stroke-linecap:butt; }
+.lanyard-strap text {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: .28em;
+  fill: var(--f1t);
+  opacity: .9;
+}
+.idc {
+  position: absolute;
+  left: 0; top: 0;
+  width: calc(236px * var(--k));
+  transform-origin: 50% 0;
+  will-change: transform;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+.idc-clip {
+  position: relative;
+  width: 2.1em;
+  height: 2.5em;
+  margin: 0 auto -1.15em;
+  z-index: 2;
+}
+.idc-clip::before { /* metal clamp */
+  content:'';
+  position:absolute; left:.25em; right:.25em; top:0; height:1.1em;
+  border-radius:.25em;
+  background:linear-gradient(90deg,#8d877c,#d9d4ca 45%,#a29c90 70%,#77716a);
+  box-shadow:0 1px 2px rgba(26,23,20,.3);
+}
+.idc-clip::after { /* ring that goes through the slot */
+  content:'';
+  position:absolute; left:50%; top:.75em; width:1.05em; height:1.6em;
+  transform:translateX(-50%);
+  border:.2em solid #a9a397;
+  border-radius:.55em;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.35), 0 1px 2px rgba(26,23,20,.25);
+}
+.idc-tilt { perspective: 1100px; }
+.idc-flip {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 236 / 340;
+  transform-style: preserve-3d;
+  transition: transform .75s cubic-bezier(.34,1.3,.5,1);
+}
+.idc.flipped .idc-flip { transform: rotateY(180deg); }
+.idc-face {
+  position: absolute;
+  inset: 0;
+  border-radius: .8em;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 1.55em 1.05em 1em;
+  box-shadow:
+    0 0 0 1px rgba(26,23,20,.08),
+    0 1.2em 2.4em rgba(26,23,20,.16),
+    0 .25em .6em rgba(26,23,20,.12);
+}
+.idc-face::before { /* punched slot */
+  content:'';
+  position:absolute; left:50%; top:.55em;
+  width:2.2em; height:.42em;
+  transform:translateX(-50%);
+  border-radius:1em;
+  background:rgba(26,23,20,.22);
+  box-shadow:inset 0 1px 2px rgba(26,23,20,.35);
+}
+.idc-face::after { /* same fabric texture as the folders */
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0,rgba(0,0,0,.025) 1px, transparent 1px, transparent 3px);
+  pointer-events:none;
+}
+.idc-front { background:#F7F2E6; color:var(--ink); }
+.idc-back  { background:var(--f1); color:var(--f1t); transform:rotateY(180deg); }
+
+.idc-meta {
+  display:flex; justify-content:space-between;
+  font-family:'DM Mono',monospace;
+  font-size:.46em; letter-spacing:.16em; text-transform:uppercase;
+  opacity:.6;
+  margin-bottom:.9em;
+}
+.idc-back .idc-meta { margin-bottom:1.5em; }
+.idc-photo {
+  position:relative;
+  flex:1;
+  min-height:0;
+  border-radius:.4em;
+  overflow:hidden;
+  background-color:#E7DFCD;
+  background-image:radial-gradient(rgba(26,23,20,.16) .07em, transparent .08em);
+  background-size:.42em .42em;
+}
+.idc-photo img {
+  position:absolute; left:0; right:0; bottom:0;
+  width:100%; height:100%;
+  object-fit:cover; object-position:50% 20%;
+  pointer-events:none;
+  -webkit-user-drag:none;
+}
+.idc-name {
+  font-family:'Playfair Display',serif;
+  font-size:1.9em; font-weight:900;
+  line-height:1; letter-spacing:-.02em;
+  margin-top:.42em;
+}
+.idc-name em { font-style:italic; font-weight:400; color:var(--muted); }
+.idc-role {
+  font-size:.8em; font-weight:500;
+  margin-top:.25em;
+}
+.idc-foot {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-top:.75em;
+  font-family:'DM Mono',monospace;
+  font-size:.44em; letter-spacing:.16em; text-transform:uppercase;
+  opacity:.55;
+}
+.idc-bars {
+  width:6.5em; height:1.6em;
+  background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 3px,currentColor 3px 5px,transparent 5px 6px,currentColor 6px 7px,transparent 7px 10px);
+}
+.idc-dots {
+  height:5.2em;
+  border-radius:.4em;
+  background-image:radial-gradient(rgba(240,234,214,.55) .09em, transparent .1em);
+  background-size:.5em .5em;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 15%,transparent 72%);
+          mask-image:radial-gradient(ellipse at 50% 40%,#000 15%,transparent 72%);
+}
+.idc-title {
+  font-family:'Playfair Display',serif;
+  font-size:2em; font-weight:900;
+  line-height:.98; letter-spacing:-.02em;
+  margin-top:auto;
+}
+.idc-title em { font-style:italic; font-weight:400; }
+.idc-sub {
+  font-size:.72em; font-weight:300;
+  line-height:1.6; opacity:.8;
+  margin-top:.7em;
+}
+.idc-hint {
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  font-family:'DM Mono',monospace;
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(26,23,20,.32);
+  pointer-events:none;
+  transition:opacity .4s;
+}
+.idc-hint::before { content:'✦'; margin-right:8px; color:var(--f1); }
+.idc:focus-visible .idc-face { box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--f1), 0 1.2em 2.4em rgba(26,23,20,.16); }
+.hero { overflow-x: clip; }
+
+@media(min-width:769px) and (max-width:1024px){
+  .lanyard { right: 9%; }
+}
+@media(max-width:768px){
+  .lanyard { right: 20px; --k: .6; }
+  .hero { padding-top: 290px; }
+  .idc-hint { font-size:8px; left:auto; right:0; transform:none; }
+}
 </style>
 </head>
 <body>
@@ -805,6 +999,36 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
     </div>
   </div>
   <div class="hero-scroll">Scroll to open files</div>
+  <!-- ID CARD on a lanyard: drag to swing, click to flip -->
+  <div class="lanyard" id="lanyard" aria-hidden="false">
+    <svg class="lanyard-strap" aria-hidden="true">
+      <path id="strapEdge" class="strap-edge" />
+      <path id="strapBody" class="strap-body" />
+      <text><textPath href="#strapBody" id="strapText" startOffset="0">SUFIA ✦ PORTFOLIO ✦ 2026 ✦ SUFIA ✦ PORTFOLIO ✦ 2026 ✦ SUFIA ✦ PORTFOLIO ✦ 2026 ✦ SUFIA ✦ PORTFOLIO ✦</textPath></text>
+    </svg>
+    <div class="idc" id="idc" role="button" tabindex="0" aria-pressed="false" aria-label="Sufia's ID card. Press to flip it over.">
+      <div class="idc-clip" aria-hidden="true"></div>
+      <div class="idc-tilt" id="idcTilt">
+        <div class="idc-flip">
+          <div class="idc-face idc-front">
+            <div class="idc-meta"><span>Portfolio / 2026</span><span>No. 001</span></div>
+            <div class="idc-photo"><img src="sufia-id.webp" alt="Black and white portrait of Sufia" draggable="false"></div>
+            <div class="idc-name">Sufia<em>.</em></div>
+            <div class="idc-role">Product Manager</div>
+            <div class="idc-foot"><span>Hyderabad · IN</span><span class="idc-bars"></span></div>
+          </div>
+          <div class="idc-face idc-back" aria-hidden="true">
+            <div class="idc-meta"><span>Sufia / 2026</span><span>No. 001</span></div>
+            <div class="idc-dots"></div>
+            <div class="idc-title">Product, Tech <em>&amp;</em> AI</div>
+            <div class="idc-sub">Building things from nothing. Open to product &amp; tech roles.</div>
+            <div class="idc-foot"><span>Access · All areas</span><span class="idc-bars"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="idc-hint" id="idcHint">Drag the pass · Click to flip</div>
+  </div>
 </section>
 
 <!-- STACKED FOLDERS -->
@@ -1654,6 +1878,143 @@ document.querySelectorAll('.f-overlay').forEach(ov => {
   ov.addEventListener('click', close_folder);
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder(); });
+
+// ── HERO ID CARD: pendulum lanyard, drag to swing, click to flip ──
+(function idCard(){
+  const wrap = document.getElementById('lanyard');
+  const card = document.getElementById('idc');
+  if (!wrap || !card) return;
+  const tilt = document.getElementById('idcTilt');
+  const edge = document.getElementById('strapEdge');
+  const body = document.getElementById('strapBody');
+  const hint = document.getElementById('idcHint');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let k = 1, W = 236, L = 200, AY = -40;   // scale, card width, strap length, anchor y
+  let theta = reduce ? 0 : 0.38, omega = 0; // strap angle (rad) and angular velocity
+  let len = 0, lenV = 0;                     // strap stretch (px) and its velocity
+  let phi = 0, phiV = 0;                     // card's own lag relative to the strap
+  let dragging = false, moved = false, downAt = 0, downX = 0, downY = 0;
+  let grabDX = 0, grabDY = 0, lastT = 0, lastTheta = 0;
+
+  function layout(){
+    const mobile = innerWidth <= 768;
+    k = mobile ? 0.6 : Math.max(0.62, Math.min(1.05, innerHeight / 900, innerWidth / 1300));
+    wrap.style.setProperty('--k', k);
+    W = 236 * k;
+    L = mobile ? 56 : Math.max(90, Math.min(220, innerHeight * 0.22));
+    AY = -40;
+    const cardH = W * 340 / 236 + 1.35 * 16 * k;
+    hint.style.top = (AY + L + cardH + (mobile ? 18 : 28)) + 'px';
+    edge.setAttribute('stroke-width', 24 * Math.max(k, .7));
+    body.setAttribute('stroke-width', 20 * Math.max(k, .7));
+  }
+
+  function pivot(){
+    const r = L + len;
+    return { x: W / 2 + Math.sin(theta) * r, y: AY + Math.cos(theta) * r };
+  }
+
+  function render(){
+    const p = pivot();
+    const rot = (theta + phi) * 180 / Math.PI;
+    card.style.transform = `translate(${p.x - W / 2}px, ${p.y}px) rotate(${-rot}deg)`;
+    // slight 3D turn while swinging so it reads as a card, not a sticker
+    tilt.style.transform = `rotateY(${Math.max(-28, Math.min(28, omega * 9))}deg)`;
+    // strap: curve bows against the direction of motion
+    const ax = W / 2, ay = AY;
+    const bow = Math.max(-40, Math.min(40, -omega * 26));
+    const mx = (ax + p.x) / 2 + bow, my = (ay + p.y) / 2;
+    const d = `M${ax} ${ay - 300} L${ax} ${ay} Q${mx} ${my} ${p.x} ${p.y + 4}`;
+    edge.setAttribute('d', d);
+    body.setAttribute('d', d);
+  }
+
+  function step(t){
+    const dt = Math.min(0.032, (t - lastT) / 1000 || 0.016);
+    lastT = t;
+    if (!dragging){
+      const g = 2600; // px/s², tuned for a lively but not floppy swing
+      const r = L + len;
+      omega += (-(g / r) * Math.sin(theta) - 1.15 * omega) * dt;
+      theta += omega * dt;
+      lenV += (-260 * len - 18 * lenV) * dt;
+      len += lenV * dt;
+    }
+    // the card lags behind the strap and settles back (spring-damper)
+    const target = -omega * 0.06;
+    phiV += ((target - phi) * 160 - phiV * 14) * dt;
+    phi += phiV * dt;
+    render();
+    requestAnimationFrame(step);
+  }
+
+  function local(e){
+    const r = wrap.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+
+  card.addEventListener('pointerdown', e => {
+    if (e.button !== undefined && e.button !== 0) return;
+    dragging = true; moved = false;
+    downAt = performance.now(); downX = e.clientX; downY = e.clientY;
+    const p = pivot(), m = local(e);
+    grabDX = m.x - p.x; grabDY = m.y - p.y;
+    lastTheta = theta;
+    card.setPointerCapture(e.pointerId);
+    hint.style.opacity = '0';
+  });
+
+  card.addEventListener('pointermove', e => {
+    if (!dragging){
+      // brushing past the card gives it a little nudge
+      if (e.pointerType === 'mouse' && e.movementX) omega += e.movementX * 0.004;
+      return;
+    }
+    if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) moved = true;
+    const m = local(e);
+    const px = m.x - grabDX, py = m.y - grabDY;
+    const dx = px - W / 2, dy = Math.max(10, py - AY);
+    const now = performance.now();
+    const newTheta = Math.max(-1.3, Math.min(1.3, Math.atan2(dx, dy)));
+    const dt = Math.max(0.008, (now - (card._lastMove || now - 16)) / 1000);
+    omega = omega * 0.5 + ((newTheta - lastTheta) / dt) * 0.5;
+    card._lastMove = now;
+    lastTheta = theta = newTheta;
+    len = Math.max(-L * 0.12, Math.min(L * 0.3, Math.hypot(dx, dy) - L));
+  });
+
+  function release(e){
+    if (!dragging) return;
+    dragging = false;
+    omega = Math.max(-7, Math.min(7, omega));
+    if (!moved && performance.now() - downAt < 450) flip();
+  }
+  card.addEventListener('pointerup', release);
+  card.addEventListener('pointercancel', release);
+
+  function flip(){
+    const on = card.classList.toggle('flipped');
+    card.setAttribute('aria-pressed', on ? 'true' : 'false');
+    card.querySelector('.idc-front').setAttribute('aria-hidden', on ? 'true' : 'false');
+    card.querySelector('.idc-back').setAttribute('aria-hidden', on ? 'false' : 'true');
+    omega += (on ? 1 : -1) * 1.4; // a flip makes it swing a little
+    hint.style.opacity = '0';
+  }
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); }
+  });
+
+  // custom cursor ring grows over the card
+  const ring = document.getElementById('c2');
+  card.addEventListener('pointerenter', () => { if (ring){ ring.style.width = '46px'; ring.style.height = '46px'; } });
+  card.addEventListener('pointerleave', () => { if (ring){ ring.style.width = ''; ring.style.height = ''; } });
+
+  layout();
+  addEventListener('resize', layout);
+  render();
+  requestAnimationFrame(t => { lastT = t; requestAnimationFrame(step); });
+})();
 </script>
 </body>
 </html>
