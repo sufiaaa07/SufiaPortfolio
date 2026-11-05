@@ -2092,7 +2092,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
         }
         const w = 236 * k;
         // sit right of centre in the free space (0.5 = centred, 1 = flush right)
-        left = Math.max(zoneL, zoneL + (zoneR - zoneL - w) * 0.72);
+        left = Math.max(zoneL, zoneL + (zoneR - zoneL - w) * 0.6);
       }
       // keep the card above the fold
       const maxH = innerHeight - 70 - (AY + L);
