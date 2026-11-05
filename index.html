@@ -2105,7 +2105,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       let found = false;
       for (let kk = k; kk >= 0.62; kk -= 0.04){
         const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, infoL - w / 2); // keep the card clear of the side links
-        if (hi >= lo){ k = kk; left = Math.min(hi, Math.max(lo, zoneL + (zoneR - zoneL) * 0.5)) - w / 2; found = true; break; }
+        if (hi >= lo){ k = kk; left = Math.min(hi, Math.max(lo, zoneL + (zoneR - zoneL) * 0.46)) - w / 2; found = true; break; }
       }
       // 2) not enough room left of the nav: pin it just under the header instead
       if (!found){
