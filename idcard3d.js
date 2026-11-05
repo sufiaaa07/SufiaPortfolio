@@ -350,8 +350,7 @@ async function start(){
       const aw = x.measureText('& ').width;
       x.font = '900 35px "Playfair Display"'; x.fillText('AI', pad + tw + aw, 266);
       x.fillStyle = 'rgba(240,234,214,.85)'; x.font = '300 11px "DM Sans"';
-      x.fillText('Building things from nothing.', pad, 287);
-      x.fillText('Open to product & tech roles.', pad, 302);
+      x.fillText('Building things from nothing.', pad, 294);
       x.fillStyle = 'rgba(240,234,214,.22)'; x.fillRect(pad, 315, BW - pad * 2, 1);
       x.fillStyle = 'rgba(240,234,214,.65)'; x.font = '400 7px "DM Mono"';
       spaced(x, 'ACCESS · ALL AREAS', pad, 333, 1.3);
