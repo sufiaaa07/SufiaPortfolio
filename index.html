@@ -30,7 +30,7 @@
 :root {
   --bg:    #EDE5D4;
   --ink:   #1A1714;
-  --muted: #6B6254;   /* darkened from #8A8070 so grey text passes contrast on the cream page */
+  --muted: #8A8070;
 
   --f1: #7A8C52;
   --f1t: #F0EAD6;
@@ -85,7 +85,7 @@ header {
 .logo em { font-style:italic; font-weight:400; color:var(--muted); }
 .hd-links {
   display: flex;
-  gap: 14px;
+  gap: 28px;
   pointer-events: all;
 }
 .hd-links a {
@@ -98,9 +98,6 @@ header {
   transition: color .2s;
 }
 .hd-links a:hover { color: var(--ink); }
-/* underline draws in on hover */
-.hd-links a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; padding-bottom: 3px; transition: color .2s, background-size .25s ease; }
-.hd-links a:hover, .hd-links a:focus-visible { background-size: 100% 1px; }
 
 /* ── HERO ── */
 .hero {
@@ -149,7 +146,7 @@ header {
 }
 .hero-desc {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--muted);
   line-height: 1.9;
   max-width: 360px;
@@ -776,8 +773,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 }
 /* hero: fit on one screen on laptops/desktops */
 @media(min-width:769px){
-  /* hero is a bit shorter than the screen so the folder tabs peek in at the bottom */
-  .hero { padding-top: 96px; padding-bottom: 64px; min-height: calc(100vh - 96px); }
+  .hero { padding-top: 96px; padding-bottom: 64px; }
   .hero-h1 { font-size: clamp(64px, min(11vw, 17vh), 148px); }
   .hero .hero-desc { max-width: none; }
   /* paragraph block never wider than the italic subheading line */
@@ -1053,13 +1049,13 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 }
 /* typewriter word in the hero subheading */
 /* each typed word takes a folder colour; the script sets --tw on the subheading */
-.tw-word { color:var(--tw, #5F6F3A); transition:color .2s; }
+.tw-word { color:var(--tw, var(--f1)); transition:color .2s; }
 .tw-caret {
   display:inline-block;
   width:2px; height:.9em;
   margin-left:3px;
   vertical-align:-.08em;
-  background:var(--tw, #5F6F3A);
+  background:var(--tw, var(--f1));
   animation:twBlink 1s steps(1) infinite;
 }
 .tw-caret.typing { animation:none; }
@@ -1085,7 +1081,6 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   <a href="#" class="logo">Sufia<em>.</em></a>
   <div class="hd-links">
     <a href="javascript:void(0)" onclick="open_folder(4)">About Me</a>
-    <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
     <a href="https://linkedin.com/in/sufia-47bb39228" target="_blank">LinkedIn</a>
     <a href="https://github.com/sufiaaa07" target="_blank">GitHub</a>
     <a href="https://medium.com/@sufiaaa07" target="_blank">Medium</a>
@@ -1991,8 +1986,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
   const caret = el.nextElementSibling;
   const words = ['use.', 'trust.', 'love.', 'experience.'];
   // olive, mauve (the cream folder's tab colour, readable on the page), pink, blue
-  // darker text shades of the folder colours (olive, mauve, pink, blue) so each word is readable on the cream page
-  const colors = ['#5F6F3A', '#9A5577', '#B4507A', '#5B6C88'];
+  const colors = ['var(--f1)', 'var(--f2t)', 'var(--f4)', 'var(--f5)'];
   const sub = el.closest('.hero-h1-sub') || el.parentElement;
   const paint = i => sub.style.setProperty('--tw', colors[i]);
   paint(0);
@@ -2094,8 +2088,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
         const w = 236 * k;
         left = Math.max(zoneL, (zoneL + zoneR) / 2 - w / 2);
       }
-      // keep the card above the fold and clear of the folder tabs peeking in at the bottom
-      const maxH = innerHeight - 120 - (AY + L);
+      // keep the card above the fold
+      const maxH = innerHeight - 70 - (AY + L);
       while (k > 0.62 && 236 * k * 344 / 236 + 40 * k > maxH) k -= 0.02;
     }
     wrap.classList.toggle('pinned', pinned);
