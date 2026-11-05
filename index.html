@@ -83,6 +83,12 @@ header {
   letter-spacing:-.01em;
 }
 .logo em { font-style:italic; font-weight:400; color:var(--muted); }
+.logo { display:inline-flex; align-items:center; }
+/* only the squiggle at the top; "Sufia." slides in beside it once you scroll */
+.logo span { display:inline-block; max-width:0; opacity:0; margin-left:0; overflow:hidden; white-space:nowrap; transform:translateX(-6px); transition:max-width .35s ease, opacity .3s ease, margin-left .35s ease, transform .35s ease; }
+header.scrolled .logo span { max-width:80px; opacity:1; margin-left:10px; transform:none; }
+.logo img { display:block; width:30px; height:15px; transition:transform .3s ease; }
+.logo:hover img { transform:translateX(-2px) rotate(-6deg); }
 .hd-links {
   display: flex;
   gap: 28px;
@@ -1107,7 +1113,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 
 <!-- HEADER -->
 <header>
-  <a href="#" class="logo">Sufia<em>.</em></a>
+  <a href="#" class="logo" aria-label="Sufia"><img src="logo.svg" alt="" width="30" height="15"><span>Sufia<em>.</em></span></a>
   <div class="hd-links">
     <a href="javascript:void(0)" onclick="open_folder(4)">About Me</a>
     <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
