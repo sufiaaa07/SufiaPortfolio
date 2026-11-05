@@ -83,11 +83,30 @@ header {
   letter-spacing:-.01em;
 }
 .logo em { font-style:italic; font-weight:400; color:var(--muted); }
+/* desktop nav: a Menu button that opens the links in a small panel, so the header leaves room for the hanging ID card */
+.hd-menu { position: relative; pointer-events: all; }
+.hd-menu-btn {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); background: none; border: 0; padding: 6px 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.hd-burger, .hd-burger::before { display: block; width: 16px; height: 1px; background: currentColor; transition: transform .25s ease; }
+.hd-burger { position: relative; transform: translateY(-3px); }
+.hd-burger::before { content: ''; position: absolute; left: 0; top: 6px; }
+.hd-menu.open .hd-burger { transform: translateY(0) rotate(45deg); }
+.hd-menu.open .hd-burger::before { top: 0; transform: rotate(-90deg); }
 .hd-links {
-  display: flex;
-  gap: 28px;
+  position: absolute; top: calc(100% + 12px); right: 0;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 20px 26px; min-width: 170px;
+  background: #F8F4EA; border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(26,23,20,.14), 0 0 0 1px rgba(26,23,20,.06);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
   pointer-events: all;
 }
+.hd-menu.open .hd-links { opacity: 1; visibility: visible; transform: none; transition: opacity .2s ease, transform .2s ease; }
+@media (prefers-reduced-motion: reduce){ .hd-links, .hd-burger, .hd-burger::before { transition: none; } }
 .hd-links a {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
@@ -612,7 +631,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 
   /* ── HEADER ── */
   header { padding: 14px 20px; }
-  .hd-links { display: none; }
+  .hd-menu { display: none; }
 
   /* ── HERO ── */
   .hero { padding: 80px 20px 52px; }
@@ -1096,7 +1115,9 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 <!-- HEADER -->
 <header>
   <a href="#" class="logo">Sufia<em>.</em></a>
-  <div class="hd-links">
+  <nav class="hd-menu" id="hdMenu">
+  <button type="button" class="hd-menu-btn" id="hdMenuBtn" aria-expanded="false" aria-controls="hdLinks">Menu <span class="hd-burger" aria-hidden="true"></span></button>
+  <div class="hd-links" id="hdLinks">
     <a href="javascript:void(0)" onclick="open_folder(4)">About Me</a>
     <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
     <a href="https://linkedin.com/in/sufia-47bb39228" target="_blank">LinkedIn</a>
@@ -1104,6 +1125,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
     <a href="https://medium.com/@sufiaaa07" target="_blank">Medium</a>
     <a href="javascript:void(0)" onclick="open_folder(5)">Contact</a>
   </div>
+  </nav>
 </header>
 
 <!-- HERO -->
@@ -1997,6 +2019,17 @@ document.querySelectorAll('.f-overlay').forEach(ov => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder(); });
 
+// ── HEADER MENU: open/close the links panel ──
+(function headerMenu(){
+  const menu = document.getElementById('hdMenu'), btn = document.getElementById('hdMenuBtn');
+  if (!menu || !btn) return;
+  const set = open => { menu.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); };
+  btn.addEventListener('click', e => { e.stopPropagation(); set(!menu.classList.contains('open')); });
+  menu.querySelectorAll('.hd-links a').forEach(a => a.addEventListener('click', () => set(false)));
+  document.addEventListener('click', e => { if (!menu.contains(e.target)) set(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+})();
+
 // ── HERO SUBHEADING: types the last word, use → trust → love → experience, each in a folder colour ──
 (function typewriter(){
   const el = document.getElementById('twWord');
@@ -2080,7 +2113,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       k = 0.5; L = 72; AY = -40;
     } else {
       const hdr = document.querySelector('header');
-      const nav = document.querySelector('.hd-links');
+      const nav = document.querySelector('.hd-menu-btn');
       const navL = nav ? nav.getBoundingClientRect().left - 22 : innerWidth;
       const zoneL = textRight() + 48;
       const zoneR = innerWidth - 48;
@@ -2091,11 +2124,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       let found = false;
       for (let kk = k; kk >= 0.62; kk -= 0.04){
         const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, navL - 40 * kk); // keep the right-hand strap clear of the nav
-        if (hi >= lo){ k = kk; left = lo + (hi - lo) * 0.85 - w / 2; found = true; break; }
+        // right of centre in the free space (0.6 across), kept inside the room the nav and text leave
+        if (hi >= lo){ k = kk; left = Math.min(hi, Math.max(lo, zoneL + (zoneR - zoneL) * 0.6)) - w / 2; found = true; break; }
       }
-      // the nav can squeeze the hanging card toward the middle of the page; if it would sit left of the
-      // middle of the free space, hang it from under the header instead so it can sit further right
-      if (found && left + 236 * k / 2 < zoneL + (zoneR - zoneL) * 0.5) found = false;
       // 2) not enough room left of the nav: pin it just under the header instead
       if (!found){
         pinned = true;
