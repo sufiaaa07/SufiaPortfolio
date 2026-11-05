@@ -1037,9 +1037,21 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 .idc-hint::before { content:'✦'; margin-right:7px; color:var(--f1); }
 .idc:focus-visible .idc-face { box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--f1); }
 
-/* contact links: the top nav covers them on bigger screens, so the hero list only shows on phones (where the nav is hidden) */
+
+.hero-info .hi-desk { display:none; }
+/* desktop: the links sit in the hero's side list at first, then fade into a sticky header once you scroll */
 @media(min-width:769px){
-  .hero-info { display:none; }
+  .hero-info .hi-desk { display:block; }
+  header { transition: background .3s, box-shadow .3s, padding .3s; }
+  header .hd-links { opacity:0; visibility:hidden; transform:translateY(-6px); transition: opacity .3s, transform .3s, visibility .3s; }
+  header.scrolled { padding-top:16px; padding-bottom:16px; background:rgba(237,229,212,.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:0 1px 0 rgba(26,23,20,.06); pointer-events:all; }
+  header.scrolled .hd-links { opacity:1; visibility:visible; transform:none; }
+}
+/* narrower laptops: the side list moves under the intro as one row, so the card keeps its spot */
+@media(min-width:769px) and (max-width:1180px){
+  .hero-row { flex-direction:column; align-items:flex-start; gap:22px; }
+  .hero-info { display:flex; flex-wrap:wrap; gap:4px 22px; max-width:560px; }
+  .hero-info a { text-align:left; line-height:1.8; }
 }
 @media(max-width:768px){
   .lanyard { right: 20px; --k: .5; }
@@ -1117,6 +1129,8 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
       <p class="hero-desc"><strong style="font-weight:500;color:var(--ink);">Lately:</strong> Exploring product, AI and the many ways to build something from nothing.</p>
     </div>
     <div class="hero-info">
+      <a href="javascript:void(0)" onclick="open_folder(4)" class="hi-desk">About Me ↗</a>
+      <a href="javascript:void(0)" onclick="open_folder(5)" class="hi-desk">Contact ↗</a>
       <a href="mailto:sufiaaa31@gmail.com">sufiaaa31@gmail.com</a>
       <a href="https://linkedin.com/in/sufia-47bb39228" target="_blank">LinkedIn ↗</a>
       <a href="https://github.com/sufiaaa07" target="_blank">GitHub ↗</a>
@@ -2080,9 +2094,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       k = 0.5; L = 72; AY = -40;
     } else {
       const hdr = document.querySelector('header');
-      const nav = document.querySelector('.hd-links');
-      const navL = nav ? nav.getBoundingClientRect().left - 22 : innerWidth;
       const zoneL = textRight() + 48;
+      const info = document.querySelector('.hero-info');
+      const ir = info && info.offsetParent ? info.getBoundingClientRect() : null;
+      const infoL = ir && ir.left > textRight() ? ir.left - 24 : innerWidth; // only matters when the list sits on the right
       const zoneR = innerWidth - 48;
       k = Math.max(0.62, Math.min(1.35, innerHeight / 700, innerWidth / 1050));
       L = Math.max(130, Math.min(280, innerHeight * 0.29));
@@ -2090,12 +2105,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
       // 1) hang from the top of the page, left of the nav links, clear of the text
       let found = false;
       for (let kk = k; kk >= 0.62; kk -= 0.04){
-        const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, navL - 40 * kk); // keep the right-hand strap clear of the nav
-        if (hi >= lo){ k = kk; left = lo + (hi - lo) * 0.85 - w / 2; found = true; break; }
+        const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, infoL - w / 2); // keep the card clear of the side links
+        if (hi >= lo){ k = kk; left = Math.min(hi, Math.max(lo, zoneL + (zoneR - zoneL) * 0.6)) - w / 2; found = true; break; }
       }
-      // the nav can squeeze the hanging card toward the middle of the page; if it would sit left of the
-      // middle of the free space, hang it from under the header instead so it can sit further right
-      if (found && left + 236 * k / 2 < zoneL + (zoneR - zoneL) * 0.5) found = false;
       // 2) not enough room left of the nav: pin it just under the header instead
       if (!found){
         pinned = true;
@@ -2268,5 +2280,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
 </script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module" src="idcard3d.js"></script>
+<script>
+(function stickyHeader(){
+  const hd = document.querySelector('header'), hero = document.querySelector('.hero');
+  if (!hd || !hero) return;
+  // html and body are both height:100%, so the body can be the scroller instead of the window
+  const y = () => Math.max(scrollY, document.body.scrollTop, document.documentElement.scrollTop);
+  const tick = () => hd.classList.toggle('scrolled', y() > hero.offsetHeight * 0.55);
+  document.addEventListener('scroll', tick, { passive:true, capture:true }); addEventListener('resize', tick); tick();
+})();
+</script>
 </body>
 </html>
