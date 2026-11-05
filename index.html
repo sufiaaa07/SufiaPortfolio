@@ -1051,6 +1051,19 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   .hero-h1-sub { font-size: clamp(17px, 5vw, 24px) !important; line-height: 1.2; min-height: 4.8em; margin-bottom: 20px !important; }
   .idc-hint { font-size:8px; left:auto; right:0; transform:none; }
 }
+/* ── hover feedback (taste-skill: linked cards lift 2px, buttons step on hover and press on click) ── */
+.proj-card { transition: transform .2s ease, box-shadow .2s ease; }
+.proj-card:hover { transform: translateY(-2px); }
+.btn-step { transition: transform .15s ease, box-shadow .15s ease; }
+.btn-step:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,23,20,.18); }
+.btn-step:active, .f-close:active { transform: scale(.96); }
+@media (prefers-reduced-motion: reduce){ .proj-card, .btn-step { transition: none; } .proj-card:hover, .btn-step:hover { transform: none; } }
+@media(max-width:768px){
+  /* Experience and Contact cards have no inner padding wrapper, so give them their own on phones */
+  .f-overlay-1 .ov-card, .f-overlay-5 .ov-card { padding: 28px 20px; }
+  /* the Live badge sits above the project tags instead of on top of them */
+  .live-badge { position: static !important; margin-bottom: 10px; }
+}
 /* typewriter word in the hero subheading */
 /* each typed word takes a folder colour; the script sets --tw on the subheading */
 .tw-word { color:var(--tw, var(--f1)); transition:color .2s; }
@@ -1422,10 +1435,10 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
         <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; align-items:stretch;">
 
           <!-- Card 0 — Humann Match (FEATURED) -->
-          <div style="background:#1A2E1A; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 22px rgba(26,60,26,.22); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
+          <div class="proj-card" style="background:#1A2E1A; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 22px rgba(26,60,26,.22); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
             <div style="position:absolute; top:-10px; left:40px; width:65px; height:20px; background:rgba(122,140,82,.55); border-radius:3px; transform:rotate(-1.5deg);"></div>
             <!-- Live badge -->
-            <div style="position:absolute; top:22px; right:28px; display:flex; align-items:center; gap:6px;">
+            <div class="live-badge" style="position:absolute; top:22px; right:28px; display:flex; align-items:center; gap:6px;">
               <span style="width:7px;height:7px;border-radius:50%;background:#6abf6a;display:inline-block;box-shadow:0 0 6px #6abf6a;animation:pulse-green 2s infinite;"></span>
               <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(240,234,214,.55);">Live · match.humannworld.com</span>
             </div>
@@ -1465,7 +1478,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 0b — Humann CRM (FEATURED) -->
-          <div style="background:#F7E3D6; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 22px rgba(181,101,74,.14); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
+          <div class="proj-card" style="background:#F7E3D6; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 22px rgba(181,101,74,.14); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
             <div style="position:absolute; top:-10px; right:52px; width:65px; height:20px; background:rgba(184,204,228,.55); border-radius:3px; transform:rotate(1.5deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#B5654A; margin-bottom:12px;">🗂️ &nbsp;Internal Product · PM & Builder · Operations</div>
             <div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:900; color:var(--ink); margin-bottom:10px; line-height:1.1; letter-spacing:-.02em;">Humann CRM: Building an Integrated Operational Platform</div>
@@ -1483,7 +1496,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 0c — Humann AI Assistant (FEATURED) -->
-          <div style="background:#3A2E1C; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 22px rgba(58,46,28,.25); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
+          <div class="proj-card" style="background:#3A2E1C; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 22px rgba(58,46,28,.25); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
             <div style="position:absolute; top:-10px; left:64px; width:60px; height:20px; background:rgba(122,140,82,.55); border-radius:3px; transform:rotate(-1deg);"></div>
             <!-- Label + status badge -->
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:12px;">
@@ -1507,7 +1520,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 0d — Master's Compass (FEATURED) -->
-          <div style="background:#E9E3F2; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 22px rgba(107,90,142,.14); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
+          <div class="proj-card" style="background:#E9E3F2; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 22px rgba(107,90,142,.14); position:relative; display:flex; flex-direction:column; grid-column: span 3;">
             <div style="position:absolute; top:-10px; right:60px; width:60px; height:20px; background:rgba(232,140,170,.45); border-radius:3px; transform:rotate(1deg);"></div>
             <!-- Label + status badge -->
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-bottom:12px;">
@@ -1533,7 +1546,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 1 — Dishlog -->
-          <div style="background:#FDE8EF; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(232,140,170,.12); position:relative; display:flex; flex-direction:column;">
+          <div class="proj-card" style="background:#FDE8EF; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(232,140,170,.12); position:relative; display:flex; flex-direction:column;">
             <div style="position:absolute; top:-10px; left:44px; width:52px; height:20px; background:rgba(232,140,170,.5); border-radius:3px; transform:rotate(-1deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#a0305a; margin-bottom:8px;">🍽️ &nbsp;Case Study · PRD · Research</div>
             <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--ink); margin-bottom:10px; line-height:1.25; letter-spacing:-.01em;">Dishlog: Personal Food-Memory &amp; Discovery App</div>
@@ -1550,7 +1563,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 2 — AI SaaS -->
-          <div style="background:#B8CCE4; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 18px rgba(42,74,122,.1); position:relative; display:flex; flex-direction:column;">
+          <div class="proj-card" style="background:#B8CCE4; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 18px rgba(42,74,122,.1); position:relative; display:flex; flex-direction:column;">
             <div style="position:absolute; top:-10px; right:44px; width:52px; height:20px; background:rgba(232,140,170,.45); border-radius:3px; transform:rotate(2deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#2a4a7a; margin-bottom:8px;">⚡ &nbsp;Engineering · Product</div>
             <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#0a1a3a; margin-bottom:10px; line-height:1.25; letter-spacing:-.01em;">Multi-Modal AI Content Generation SaaS</div>
@@ -1565,7 +1578,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 3 — NoteSwap -->
-          <div style="background:#FAE8B0; border-radius:3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(0,0,0,.09); position:relative; display:flex; flex-direction:column;">
+          <div class="proj-card" style="background:#FAE8B0; border-radius:3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(0,0,0,.09); position:relative; display:flex; flex-direction:column;">
             <div style="position:absolute; top:-10px; left:36px; width:52px; height:20px; background:rgba(184,204,228,.7); border-radius:3px; transform:rotate(-1.5deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#7a5a00; margin-bottom:8px;">📚 &nbsp;BRD · PRD · Wireframes</div>
             <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#3a2a00; margin-bottom:10px; line-height:1.25; letter-spacing:-.01em;">NoteSwap: Peer Study Notes Exchange</div>
@@ -1580,7 +1593,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 4 — Zepto -->
-          <div style="background:#C8D8B0; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(122,140,82,.12); position:relative; display:flex; flex-direction:column;">
+          <div class="proj-card" style="background:#C8D8B0; border-radius:18px 3px 18px 3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(122,140,82,.12); position:relative; display:flex; flex-direction:column;">
             <div style="position:absolute; top:-10px; right:40px; width:55px; height:20px; background:rgba(250,232,176,.7); border-radius:3px; transform:rotate(1.5deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#4a6a28; margin-bottom:8px;">🛒 &nbsp;Product Concept · Growth</div>
             <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#1a3a10; margin-bottom:10px; line-height:1.25; letter-spacing:-.01em;">Next on Zepto: Smart Cooking Companion</div>
@@ -1594,7 +1607,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 5 — Instagram Reels -->
-          <div style="background:#F5F0E8; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 18px rgba(26,23,20,.09); position:relative; display:flex; flex-direction:column;">
+          <div class="proj-card" style="background:#F5F0E8; border-radius:3px 18px 3px 18px; padding:26px 28px; box-shadow:3px 5px 18px rgba(26,23,20,.09); position:relative; display:flex; flex-direction:column;">
             <div style="position:absolute; top:-10px; left:40px; width:55px; height:20px; background:rgba(232,140,170,.45); border-radius:3px; transform:rotate(-2deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">📱 &nbsp;Case Study · UX</div>
             <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--ink); margin-bottom:10px; line-height:1.25; letter-spacing:-.01em;">Smart Reels Refresh: Instagram Feature</div>
@@ -1608,7 +1621,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           </div>
 
           <!-- Card 6 — Sign Language Recognition -->
-          <div style="background:#D5E7E4; border-radius:3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(36,82,78,.1); position:relative; display:flex; flex-direction:column;">
+          <div class="proj-card" style="background:#D5E7E4; border-radius:3px; padding:26px 28px; box-shadow:3px 5px 18px rgba(36,82,78,.1); position:relative; display:flex; flex-direction:column;">
             <div style="position:absolute; top:-10px; left:40px; width:60px; height:20px; background:rgba(232,140,170,.45); border-radius:3px; transform:rotate(-1deg);"></div>
             <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#2F6A64; margin-bottom:8px;">🤟 &nbsp;Machine Learning · Computer Vision</div>
             <div style="font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:#12332F; margin-bottom:10px; line-height:1.25; letter-spacing:-.01em;">Sign Language Recognition</div>
@@ -1931,7 +1944,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
           <div class="ci"><span class="ci-l">Notion</span><a href="https://app.notion.com/p/Case-Study-Gallery-21f02c624a26803ab2a2dc1f4ac05aff?source=copy_link" target="_blank">Case Study Gallery</a></div>
           <div class="ci"><span class="ci-l">Location</span><span>Hyderabad, India</span></div>
           <div class="ci" style="border-bottom:none; padding-top:24px;">
-            <a href="resume.pdf" download="Sufia_Resume.pdf" style="display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:var(--bg); font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; padding:12px 20px; border-radius:6px; text-decoration:none; transition:opacity .2s;">
+            <a class="btn-step" href="resume.pdf" download="Sufia_Resume.pdf" style="display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:var(--bg); font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; padding:12px 20px; border-radius:6px; text-decoration:none; transition:opacity .2s;">
               ↓ Download Resume
             </a>
           </div>
