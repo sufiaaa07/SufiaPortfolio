@@ -1043,11 +1043,12 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 }
 @media(max-width:768px){
   .lanyard { right: 20px; --k: .5; }
-  /* "Hi, I'm SUFIA." sits beside the card near the top; the subheading starts below the card */
+  /* "Hi, I'm SUFIA." and the subheading sit beside the card near the top */
   .hero { padding-top: 76px; justify-content: flex-start; }
-  .hero-tag, .hero-h1 { max-width: calc(100% - 150px); }
-  .hero-h1 { min-height: 139px; font-size: min(clamp(52px, 11vw, 148px), calc((100vw - 178px) / 3.1)); }
-  .hero-h1-sub { min-height: 2em; } /* typed word never changes the line count */
+  .hero-tag, .hero-h1, .hero-h1-sub { max-width: calc(100% - 150px); }
+  .hero-h1 { font-size: min(clamp(52px, 11vw, 148px), calc((100vw - 178px) / 3.1)); }
+  /* the subheading wraps beside the card; its fixed height keeps the text below from jumping as words are typed */
+  .hero-h1-sub { font-size: clamp(17px, 5vw, 24px) !important; line-height: 1.2; min-height: 4.8em; margin-bottom: 20px !important; }
   .idc-hint { font-size:8px; left:auto; right:0; transform:none; }
 }
 /* typewriter word in the hero subheading */
