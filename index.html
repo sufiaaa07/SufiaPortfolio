@@ -2091,7 +2091,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
           if (zoneR - zoneL >= w) break;
         }
         const w = 236 * k;
-        left = Math.max(zoneL, (zoneL + zoneR) / 2 - w / 2);
+        // sit on the right, its right edge in line with the header links
+        left = Math.max(zoneL, zoneR - w);
       }
       // keep the card above the fold
       const maxH = innerHeight - 70 - (AY + L);
