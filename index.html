@@ -2093,6 +2093,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
         const w = 236 * kk, lo = zoneL + w / 2, hi = Math.min(zoneR - w / 2, navL - 40 * kk); // keep the right-hand strap clear of the nav
         if (hi >= lo){ k = kk; left = lo + (hi - lo) * 0.85 - w / 2; found = true; break; }
       }
+      // the nav can squeeze the hanging card toward the middle of the page; if it would sit left of the
+      // middle of the free space, hang it from under the header instead so it can sit further right
+      if (found && left + 236 * k / 2 < zoneL + (zoneR - zoneL) * 0.5) found = false;
       // 2) not enough room left of the nav: pin it just under the header instead
       if (!found){
         pinned = true;
