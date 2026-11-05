@@ -3,7 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sufia</title>
+<title>Sufia · Product Manager</title>
+<meta name="description" content="Hi, I'm Sufia, a product manager in Hyderabad. I turn ideas into products people can use. See my experience, projects, skills and resume.">
+<link rel="canonical" href="https://portfolio-sufia3.vercel.app/">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#EDE5D4">
+<!-- link previews (LinkedIn, WhatsApp, iMessage, Slack, X) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sufia">
+<meta property="og:title" content="Sufia · Product Manager">
+<meta property="og:description" content="Hi, I'm Sufia, a product manager in Hyderabad. I turn ideas into products people can use. See my experience, projects, skills and resume.">
+<meta property="og:url" content="https://portfolio-sufia3.vercel.app/">
+<meta property="og:image" content="https://portfolio-sufia3.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sufia's portfolio: SUFIA. I turn ideas into products people can use, next to Sufia's ID card.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sufia · Product Manager">
+<meta name="twitter:description" content="Hi, I'm Sufia, a product manager in Hyderabad. I turn ideas into products people can use. See my experience, projects, skills and resume.">
+<meta name="twitter:image" content="https://portfolio-sufia3.vercel.app/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -11,7 +30,7 @@
 :root {
   --bg:    #EDE5D4;
   --ink:   #1A1714;
-  --muted: #8A8070;
+  --muted: #6B6254;   /* darkened from #8A8070 so grey text passes contrast on the cream page */
 
   --f1: #7A8C52;
   --f1t: #F0EAD6;
@@ -66,7 +85,7 @@ header {
 .logo em { font-style:italic; font-weight:400; color:var(--muted); }
 .hd-links {
   display: flex;
-  gap: 28px;
+  gap: 14px;
   pointer-events: all;
 }
 .hd-links a {
@@ -79,6 +98,9 @@ header {
   transition: color .2s;
 }
 .hd-links a:hover { color: var(--ink); }
+/* underline draws in on hover */
+.hd-links a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; padding-bottom: 3px; transition: color .2s, background-size .25s ease; }
+.hd-links a:hover, .hd-links a:focus-visible { background-size: 100% 1px; }
 
 /* ── HERO ── */
 .hero {
@@ -127,7 +149,7 @@ header {
 }
 .hero-desc {
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--muted);
   line-height: 1.9;
   max-width: 360px;
@@ -754,7 +776,8 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
 }
 /* hero: fit on one screen on laptops/desktops */
 @media(min-width:769px){
-  .hero { padding-top: 96px; padding-bottom: 64px; }
+  /* hero is a bit shorter than the screen so the folder tabs peek in at the bottom */
+  .hero { padding-top: 96px; padding-bottom: 64px; min-height: calc(100vh - 96px); }
   .hero-h1 { font-size: clamp(64px, min(11vw, 17vh), 148px); }
   .hero .hero-desc { max-width: none; }
   /* paragraph block never wider than the italic subheading line */
@@ -1023,20 +1046,20 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   .hero-info { display:none; }
 }
 @media(max-width:768px){
-  .lanyard { right: 20px; --k: .7; }
-  .hero { padding-top: 345px; }
+  .lanyard { right: 20px; --k: .5; }
+  .hero { padding-top: 262px; }
   .hero-h1-sub { min-height: 2em; } /* typed word never changes the line count */
   .idc-hint { font-size:8px; left:auto; right:0; transform:none; }
 }
 /* typewriter word in the hero subheading */
 /* each typed word takes a folder colour; the script sets --tw on the subheading */
-.tw-word { color:var(--tw, var(--f1)); transition:color .2s; }
+.tw-word { color:var(--tw, #5F6F3A); transition:color .2s; }
 .tw-caret {
   display:inline-block;
   width:2px; height:.9em;
   margin-left:3px;
   vertical-align:-.08em;
-  background:var(--tw, var(--f1));
+  background:var(--tw, #5F6F3A);
   animation:twBlink 1s steps(1) infinite;
 }
 .tw-caret.typing { animation:none; }
@@ -1062,6 +1085,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
   <a href="#" class="logo">Sufia<em>.</em></a>
   <div class="hd-links">
     <a href="javascript:void(0)" onclick="open_folder(4)">About Me</a>
+    <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
     <a href="https://linkedin.com/in/sufia-47bb39228" target="_blank">LinkedIn</a>
     <a href="https://github.com/sufiaaa07" target="_blank">GitHub</a>
     <a href="https://medium.com/@sufiaaa07" target="_blank">Medium</a>
@@ -1084,6 +1108,7 @@ footer { padding:32px 48px; display:flex; justify-content:space-between; align-i
       <a href="https://linkedin.com/in/sufia-47bb39228" target="_blank">LinkedIn ↗</a>
       <a href="https://github.com/sufiaaa07" target="_blank">GitHub ↗</a>
       <a href="https://medium.com/@sufiaaa07" target="_blank">Medium ↗</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
     </div>
   </div>
   <div class="hero-scroll">Scroll to open files</div>
@@ -1966,7 +1991,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
   const caret = el.nextElementSibling;
   const words = ['use.', 'trust.', 'love.', 'experience.'];
   // olive, mauve (the cream folder's tab colour, readable on the page), pink, blue
-  const colors = ['var(--f1)', 'var(--f2t)', 'var(--f4)', 'var(--f5)'];
+  // darker text shades of the folder colours (olive, mauve, pink, blue) so each word is readable on the cream page
+  const colors = ['#5F6F3A', '#9A5577', '#B4507A', '#5B6C88'];
   const sub = el.closest('.hero-h1-sub') || el.parentElement;
   const paint = i => sub.style.setProperty('--tw', colors[i]);
   paint(0);
@@ -2039,7 +2065,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
     wrap.classList.remove('pinned');
     let pinned = false, left = null;
     if (mobile){
-      k = 0.7; L = 72; AY = -40;
+      k = 0.5; L = 72; AY = -40;
     } else {
       const hdr = document.querySelector('header');
       const nav = document.querySelector('.hd-links');
@@ -2068,8 +2094,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') close_folder
         const w = 236 * k;
         left = Math.max(zoneL, (zoneL + zoneR) / 2 - w / 2);
       }
-      // keep the card above the fold
-      const maxH = innerHeight - 70 - (AY + L);
+      // keep the card above the fold and clear of the folder tabs peeking in at the bottom
+      const maxH = innerHeight - 120 - (AY + L);
       while (k > 0.62 && 236 * k * 344 / 236 + 40 * k > maxH) k -= 0.02;
     }
     wrap.classList.toggle('pinned', pinned);
